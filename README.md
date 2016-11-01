@@ -115,7 +115,7 @@ The spread syntax allows an expression to be expanded to comma separated values.
 
 <!--v-->
 
-#### ES6 => Solution
+#### ES6
 
 ```javascript
   function logger(type, ...logs) {
