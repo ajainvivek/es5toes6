@@ -1,3 +1,13 @@
+---
+title: Syntatic Sugar for NodeJS Application
+separator: <!--s-->
+verticalSeparator: <!--v-->
+theme: css/theme/white.css
+---
+## Syntatic Sugar for NodeJS Application
+
+@ajainvivek
+
 <!--s-->
 
 ### What is EcmaScript2015(ES6)?
@@ -23,19 +33,7 @@ Default function parameters allow formal parameters to be initialized with defau
 
 <!--v-->
 
-#### ES5 => Problem
-
-```javascript
-  function add(x, y) {
-    return x + y;
-  }
-  add(2, 3); //5
-  add(2); //NaN
-```
-
-<!--v-->
-
-#### ES5 => Solution
+#### ES5
 
 ```javascript
   function add(x, y) {
@@ -49,7 +47,7 @@ Default function parameters allow formal parameters to be initialized with defau
 
 <!--v-->
 
-#### ES6 => Solution
+#### ES6
 
 ```javascript
   function add(x=0, y=0) {
@@ -67,22 +65,7 @@ The rest parameter syntax allows us to represent an indefinite number of argumen
 
 <!--v-->
 
-#### ES5 => Problem
-
-```javascript
-  function logger(type, log) {
-    return type + " : " + log;
-  }
-  logger("ERROR", "Cannot read property"); //ERROR : Cannot read property
-  logger("ERROR", [{
-    "severity" : "high",
-    "message" : "Cannot read property"
-  }]); //ERROR : [object Object]
-```
-
-<!--v-->
-
-#### ES5 => Solution
+#### ES5
 
 ```javascript
   function logger() {
@@ -105,7 +88,7 @@ The rest parameter syntax allows us to represent an indefinite number of argumen
 
 <!--v-->
 
-#### ES6 => Solution
+#### ES6
 
 ```javascript
   function logger(type, ...logs) {
