@@ -1,3 +1,4 @@
+
 <!--s-->
 
 ### What is EcmaScript2015(ES6)?
@@ -270,4 +271,129 @@ The destructuring assignment syntax is a JavaScript expression that makes it pos
   add(4, 5); //9
 
   var { addOperator, subOperator } = ["+", "-"];
+```
+
+<!--s-->
+
+### Block Scope
+
+`const` and `let` introduces block scoping in javascript.
+
+<!--v-->
+
+#### ES5
+
+```javascript
+  var PI = 3.14; //PI can be modified
+  var global = 10;
+
+  if (global) {
+    var global = 100;
+  }
+
+  console.log(global * PI); // 100
+
+  for (var i = 0; i < 10; i++) {
+    setTimeout(function () {
+      console.log(i); // 10, 10, 10, ....
+    }, 1000);
+  }
+```
+
+<!--v-->
+
+#### ES6
+
+```javascript
+  const PI = 3.14; //PI cannot be modified
+  let global = 10;
+
+  if (global) {
+    let global = 100;
+  }
+
+  console.log(global); // 100
+
+  for (let i = 0; i < 10; i++) {
+    setTimeout(function () {
+      console.log(i); // 0, 1, 2, ....
+    }, 1000);
+  }
+```
+
+<!--s-->
+
+### Arrow Functions
+
+An arrow function expression has a shorter syntax compared to function expressions and does not bind its own this, arguments, super, or new.target. Arrow functions are always anonymous. These function expressions are best suited for non-method functions and they can not be used as constructors.
+
+<!--v-->
+
+#### ES5 - Simple Function
+
+```javascript
+  var add = function (a, b) {
+    return a + b;
+  }
+  var sub = function (a, b) {
+    return a - b;
+  }
+  console.log(add(2, 3)); //5
+  console.log(sub(5, 3)); //2
+```
+
+<!--v-->
+
+#### ES6 - Shortcut Notation
+
+```javascript
+  var add = (a, b) => {
+    return a + b;
+  }
+  var sub = (a, b) => a - b;
+  console.log(add(2, 3)); //5
+  console.log(sub(5, 3)); //2
+```
+
+<!--v-->
+
+#### ES5 - Constructor Binding
+
+```javascript
+  var Greeting = function (name) {
+    var self = this;
+    this.name = name;
+    this.sayHello = function () {
+      return 'Hello ' + this.name + ' !!!';
+    }
+    this.sayHelloAsync = function () {
+      setTimeout(function () {
+        return 'Hello ' + self.name + ' !!!';
+      }, 1000);
+    }
+  }
+  var g = new Greeting('Jon');
+  g.sayHello(); //Hello Jon !!!
+  g.sayHelloAsync(); //Hello Jon !!!
+```
+
+<!--v-->
+
+#### ES6 - Constructor Lexical Binding
+
+```javascript
+  var Greeting = function (name) {
+    this.name = name;
+    this.sayHello = () => {
+      return `Hello ${this.name} !!!`;
+    }
+    this.sayHelloAsync = () => {
+      setTimeout(() => {
+        return `Hello ${this.name} !!!`;
+      }, 1000);
+    }
+  }
+  var {sayHello, sayHelloAsync} = new Greeting('Jon');
+  sayHello(); //Hello Jon !!!
+  sayHelloAsync(); //Hello Jon !!!
 ```
