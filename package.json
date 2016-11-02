@@ -1,0 +1,25 @@
+{
+  "name": "es5toes6",
+  "version": "1.0.0",
+  "description": "Guide to smartly transform your existing ES5 code to ES6 equivalent",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ajainvivek/es5toes6.git"
+  },
+  "keywords": [
+    "ES6",
+    "EcmaScript2015",
+    "ES5",
+    "Guide"
+  ],
+  "author": "Ajain Vivek",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ajainvivek/es5toes6/issues"
+  },
+  "homepage": "https://github.com/ajainvivek/es5toes6#readme"
+}

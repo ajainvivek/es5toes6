@@ -1,12 +1,19 @@
+---
+title: Syntatic Sugar for NodeJS Application
+separator: <!--s-->
+verticalSeparator: <!--v-->
+theme: css/theme/white.css
+---
+## Syntatic Sugar for NodeJS Application
+
+@ajainvivek
 
 <!--s-->
 
 ### What is EcmaScript2015(ES6)?
 
-* Adds new features to Ecma 262 standards
-* Engines can develop and support the features
-* Kangax is our guide
-
+* Adds a set of new features to Ecma 262 standards
+* Compatibility table [kangax](http://kangax.github.io/compat-table/es6/)
 
 <!--s-->
 
@@ -67,7 +74,6 @@ The rest parameter syntax allows us to represent an indefinite number of argumen
     }
     return type + " : " + messages;
   }
-  logger("ERROR", "Cannot read property"); //ERROR : Cannot read property
   logger("ERROR", {
     "severity" : "high",
     "message" : "Cannot read property"
@@ -102,7 +108,30 @@ The rest parameter syntax allows us to represent an indefinite number of argumen
 
 ### Spread Operator
 
-The spread syntax allows an expression to be expanded to comma separated values.
+The spread syntax allows an expression to be expanded by comma separated values.
+
+<!--v-->
+
+#### ES5
+
+```javascript
+  function logger() {
+    var type = arguments[0];
+    var messages = [];
+    for (var i = 1; i < arguments.length; i++) {
+      messages.push(arguments[i].message);
+    }
+    return type + " : " + messages;
+  }
+  var errors = [{
+    "severity" : "high",
+    "message" : "Cannot read property"
+  }, {
+    "severity" : "high",
+    "message" : "product is not defined"
+  }];
+  console.log(logger.apply({}, ["ERROR"].concat(errors))); //ERROR : Cannot read property, product is not defined
+```
 
 <!--v-->
 
@@ -140,7 +169,7 @@ An object literal is a list of zero or more pairs of property names and associat
   function regionService() {
     function getRegion(name) {
       var region = {
-        name: "Sydney"
+        name: "Sydney",
         data: {
           population: 100
         }
@@ -171,7 +200,7 @@ An object literal is a list of zero or more pairs of property names and associat
   function regionService() {
     function getRegion(name) {
       var region = {
-        name: "Sydney"
+        name: "Sydney",
         data: {
           population: 100
         }
@@ -270,7 +299,7 @@ The destructuring assignment syntax is a JavaScript expression that makes it pos
   var { add } = calc();
   add(4, 5); //9
 
-  var { addOperator, subOperator } = ["+", "-"];
+  var [addOperator, subOperator] = ["+", "-"];
 ```
 
 <!--s-->
@@ -396,4 +425,150 @@ An arrow function expression has a shorter syntax compared to function expressio
   var {sayHello, sayHelloAsync} = new Greeting('Jon');
   sayHello(); //Hello Jon !!!
   sayHelloAsync(); //Hello Jon !!!
+```
+
+<!--s-->
+
+### Classes
+
+JavaScript classes introduced in ECMAScript 6 are syntactical sugar over JavaScript's existing prototype-based inheritance. The class syntax is not introducing a new object-oriented inheritance model to JavaScript. JavaScript classes provide a much simpler and clearer syntax to create objects and deal with inheritance.
+
+<!--v-->
+
+#### ES5
+
+```javascript
+  // Constructor Method
+  var Person = function (name, age) {
+    this.name = name;
+    this.age = age;
+  }
+
+  Person.prototype.sayHello = function () {
+    return 'Hello ' + this.name;
+  }
+
+  var person1 = new Person('Jon', 25);
+  console.log(person1.sayHello());
+
+  // Classical JS Prototypical Inheritance
+  var Employee = function (name, salary) {
+    this.name = name;
+    this.salary = salary;
+  }
+
+  Employee.prototype = new Person(); // Here's where the inheritance occurs
+  Employee.prototype.constructor = Employee; // Otherwise instances of Employee would have a constructor of Person
+  Employee.prototype.parent = Person.prototype; // Super
+
+  Employee.prototype.sayHello = function () {
+    return this.parent.sayHello.call(this) + " !!!!!";
+  }
+
+  var employee1 = new Employee("Smith", 2000);
+  console.log(employee1.sayHello());
+```
+
+<!--v-->
+
+#### ES6
+
+```javascript
+  // Class based approach
+  class Person {
+    constructor(name, age) {
+      this.name = name;
+      this.age = age;
+    }
+
+    sayHello() {
+      return `Hello ${this.name}`;
+    }
+  }
+
+  var person1 = new Person('Jon', 25);
+  console.log(person1.sayHello());
+
+  // Classical JS Inheritance
+  class Employee extends Person {
+    constructor(name, salary) {
+      super();
+      this.name = name;
+      this.salary = salary;
+    }
+
+    sayHello() {
+      return `${super.sayHello()} !!!!`;
+    }
+  }
+
+  var employee1 = new Employee("Smith", 2000);
+  console.log(employee1.sayHello());
+```
+
+<!--s-->
+
+### Generators
+
+Generators are functions that can be paused and resumed. This helps with many applications: iterators, asynchronous programming, etc.
+
+<!--v-->
+
+#### ES5
+
+```javascript
+  var getPaymentHistory = function (year) {
+    var fetchHistory = function (year) {
+      return 'History for ' + year + ' is ....';
+    }
+    return fetchHistory(year);
+  }
+
+  var validate = function (token) {
+    if (token === 111) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  var token = 111;
+  var year = 2011;
+  var isValid = validate(token);
+  if (isValid) {
+    var history = getPaymentHistory(year);
+    console.log(history);
+  }
+```
+
+<!--v-->
+
+#### ES6
+
+```javascript
+  var getPaymentHistory = function* (token) {
+    var validate = function (token) {
+      if (token === 111) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    var fetchHistory = function (year) {
+      return `History for ${year} is ....`;
+    }
+
+    var nextInput = yield(validate(token));
+    yield(fetchHistory(nextInput));
+  }
+
+  var token = 111;
+  var year = 2011;
+  var iterator = getPaymentHistory(token);
+  var isValid = iterator.next();
+  if (isValid.value) {
+    var history = iterator.next(year);
+    console.log(history);
+  }
 ```
