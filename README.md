@@ -1,13 +1,3 @@
----
-title: Syntatic Sugar for NodeJS Application
-separator: <!--s-->
-verticalSeparator: <!--v-->
-theme: css/theme/white.css
----
-## Syntatic Sugar for NodeJS Application
-
-@ajainvivek
-
 <!--s-->
 
 ### What is EcmaScript2015(ES6)?
